@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 function NewFundraiser(props) {
-  const contract=props.contract;
-  const accounts=props.accounts;
+  const contract = props.contract;
+  const accounts = props.accounts;
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -9,18 +9,18 @@ function NewFundraiser(props) {
   const [beneficiary, setBeneficiary] = useState('');
   const handleCreateCard = async () => {
     try {
-      if(contract){
-        const createnewFundraiser= await contract.methods.createFundraiser(
+      if (contract) {
+        const createnewFundraiser = await contract.methods.createFundraiser(
           name,
           url,
           imageUrl,
           description,
           beneficiary
-        ).send({from:accounts[0]})
+        ).send({ from: accounts[0] })
         alert('Successfully created fundraiser')
       }
     } catch (error) {
-        console.log("error in NewFundraiser",error);
+      console.log("error in NewFundraiser", error);
     }
 
   }
@@ -84,7 +84,7 @@ function NewFundraiser(props) {
           </div>
         </div>
 
-        
+
         <div className="flex createcardbutton justify-center ">
           <div className="justify-self-center ">
             <button className="shadow bg-violet-500 hover:bg-violet-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={handleCreateCard}>

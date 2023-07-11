@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import FundraiserCard from './FundraiserCard';
-import { ABI, Address } from './ABI';
+import { ABI, Address } from './utils/ABI';
 // import Web3 from 'web3'
 function Home(props) {
   const web3=props.web3;

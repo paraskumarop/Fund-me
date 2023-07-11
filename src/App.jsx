@@ -3,10 +3,10 @@ import { createContext, useEffect, useState } from "react";
 import getWeb3 from "./getWeb3";
 import { ABI, Address } from "./utils/ABI";
 import { createBrowserRouter,RouterProvider } from 'react-router-dom';
-import Root from "./utils/Root";
-import NewFundraiser from "./utils/NewFundraiser";
-import Receipt from "./utils/Receipt";
-import Home from "./utils/Home";
+import Root from "./Root";
+import NewFundraiser from "./NewFundraiser";
+import Receipt from "./Receipt";
+import Home from "./Home";
 import ErrorPage from "./ErrorPage";
 
 

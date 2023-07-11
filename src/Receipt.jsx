@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import bgImage from "../utils/bg.svg"
+import bgImage from "./utils/bg.svg"
 
 function Receipt(props) {
   const location = useLocation();

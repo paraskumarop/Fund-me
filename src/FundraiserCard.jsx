@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { web3Context } from "../App";
-import { FundraiserABI } from "./ABI";
+import { web3Context } from "./App";
+import { FundraiserABI } from "./utils/ABI";
 import Modal from "./Modal.jsx";
 import cc from 'cryptocompare'
 import { Link } from "react-router-dom";
@@ -15,12 +15,10 @@ function FundraiserCard(props) {
   const [description, setDescription] = useState();
   const [contract, setContract] = useState();
   const [accounts, setAccounts] = useState();
-  const [amount, setAmount] = useState();
   const [totalDonations, setTotalDonations] = useState(0);
   const [totaldonationCount, setTotaldonationCount] = useState(0);
   const [imageError, setImageError] = useState(false);
   const [mydonations, setmyDonations] = useState();
-  const [mydonationsCount, setMyDonationsCount] = useState();
   const [showModal, setShowModal] = useState(false)
   const [exchangeRate, setExchangeRate] = useState();
   const [ethvalue, setEthvalue] = useState(0);
@@ -43,13 +41,11 @@ function FundraiserCard(props) {
         const imageUrl = await Fundraiser.methods.imageUrl().call();
         const description = await Fundraiser.methods.description().call();
         const beneficiary = await Fundraiser.methods.beneficiary().call();
-        const mydontaionsCount = await Fundraiser.methods.mydonationsCount().call({ from: accounts[0] });
         const totaldonations = await Fundraiser.methods.totalDonations().call();
         const isOwner = await Fundraiser.methods.owner().call();
         if (isOwner === accounts[0]) {
           setIsOWner(true);
         }
-        setMyDonationsCount(mydontaionsCount);
         const mydontaions = await Fundraiser.methods.mydonations().call({ from: accounts[0] });
         setmyDonations(mydontaions);
         console.log(totaldonations)
@@ -81,14 +77,14 @@ function FundraiserCard(props) {
 
   const handleDonate = async () => {
     try {
-      const EthInWei = web3.utils.toWei(ethvalue,'ether');
-      console.log("ethinwei",EthInWei);
+      const EthInWei = web3.utils.toWei(ethvalue, 'ether');
+      console.log("ethinwei", EthInWei);
       const donationDone = await contract.methods
         .donate()
         .send({ from: accounts[0], value: EthInWei });
       alert("Donation is done", donationDone);
     } catch (error) {
-      console.log("error in fundraisercard",error);
+      console.log("error in fundraisercard", error);
     }
   };
 
@@ -223,11 +219,10 @@ function FundraiserCard(props) {
                   type="text"
                   placeholder="$Donation(USD)"
                   onChange={(e) => {
-                    setAmount(e.target.value);
-                    const eth=(e.target.value) / exchangeRate;
+                    const eth = (e.target.value) / exchangeRate;
                     console.log(eth);
-                    setEthvalue(eth);   
-                   
+                    setEthvalue(eth);
+
                   }}
                 />
 
