@@ -24,7 +24,7 @@ function App() {
         const Web3 = await getWeb3();
         setWeb3(Web3);
         const accounts = await Web3.eth.getAccounts();
-        setAccounts(accounts);
+        setAccounts(accounts[0]);
         setWeb3Loading(false);
         const contract = new Web3.eth.Contract(ABI, Address);
         setContract(contract);

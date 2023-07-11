@@ -52,10 +52,12 @@ function FundraiserCard(props) {
         setMyDonationsCount(mydontaionsCount);
         const mydontaions = await Fundraiser.methods.mydonations().call({ from: accounts[0] });
         setmyDonations(mydontaions);
+        console.log(totaldonations)
         const totaldonEth = web3.utils.fromWei(totaldonations, "ether");
         const ExchangeRate = await cc.price('ETH', ['USD'])
         setExchangeRate(ExchangeRate.USD);
         const dollarTotalAmount = ExchangeRate.USD * totaldonEth;
+        console.log(dollarTotalAmount);
         setTotalDonations(dollarTotalAmount);
         const totaldonationCount = await Fundraiser.methods
           .totaldonationCount()
@@ -79,16 +81,14 @@ function FundraiserCard(props) {
 
   const handleDonate = async () => {
     try {
-      const ethRate = exchangeRate;
-      const ethTotal = amount / ethRate;
-      const Ethtotalinwei = web3.utils.toWei(ethTotal, 'ether');
-      console.log(Ethtotalinwei);
+      const EthInWei = web3.utils.toWei(ethvalue,'ether');
+      console.log("ethinwei",EthInWei);
       const donationDone = await contract.methods
         .donate()
-        .send({ from: accounts[0], value: Ethtotalinwei });
+        .send({ from: accounts[0], value: EthInWei });
       alert("Donation is done", donationDone);
     } catch (error) {
-      console.log(error);
+      console.log("error in fundraisercard",error);
     }
   };
 
@@ -99,12 +99,10 @@ function FundraiserCard(props) {
     }
     let donationList = [];
     for (let i = 0; i < donations.dates.length; i++) {
-      const amountinWei = donations[0][i];
-      const amount = web3.utils.fromWei(amountinWei, "ether");
+      const amount = web3.utils.fromWei(donations[0][i], "ether");
       const AmountUsd = exchangeRate * amount;
       const date = donations.dates[i];
-      console.log(AmountUsd)
-      donationList.push({ donationAmount: Number(AmountUsd).toFixed(3), date: date });
+      donationList.push({ donationAmount: (AmountUsd).toFixed(3), date: date });
     }
 
     if (donationList.length == 0) {
@@ -145,7 +143,7 @@ function FundraiserCard(props) {
     <>
       <div
         className="FundraiserCard transition duration-300 transform rounded shadow-lg hover:shadow-gray-800 hover:shadow-lg m-4  "
-        id={fundraisers}
+        id={fundraisers} key={fundraisers}
       >
         <div className="max-w-sm rounded overflow-hidden shadow-lg">
           <img
@@ -226,7 +224,10 @@ function FundraiserCard(props) {
                   placeholder="$Donation(USD)"
                   onChange={(e) => {
                     setAmount(e.target.value);
-                    setEthvalue((e.target.value) / exchangeRate);
+                    const eth=(e.target.value) / exchangeRate;
+                    console.log(eth);
+                    setEthvalue(eth);   
+                   
                   }}
                 />
 
@@ -237,7 +238,7 @@ function FundraiserCard(props) {
               </div>
               <div className="w-1/4 p-1 font-mono font-medium">
 
-                <p>ETH:{Number(ethvalue).toFixed(2)} </p>
+                <p>ETH:{ethvalue.toFixed(3)} </p>
               </div>
             </div>
           </div>

@@ -6,7 +6,6 @@ function Home(props) {
   const web3=props.web3;
   const [funds, setFunds] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showModal,setShowModal] =useState(false);
   useEffect(() => {
     (async () => {
       try {

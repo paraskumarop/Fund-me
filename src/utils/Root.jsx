@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 function Root(props) {
-  const accounts = props.accounts;
+  let accounts = props.accounts;
+  // const primaryAccount=accounts[0];
   const web3loading = props.web3loading;
   return (
     <>

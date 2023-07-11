@@ -20,7 +20,7 @@ function NewFundraiser(props) {
         alert('Successfully created fundraiser')
       }
     } catch (error) {
-        console.log(error);
+        console.log("error in NewFundraiser",error);
     }
 
   }
